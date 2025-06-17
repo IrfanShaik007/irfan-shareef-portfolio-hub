@@ -266,10 +266,16 @@ const Index = () => {
               </p>
               
               <div className="flex flex-wrap gap-4">
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
-                  <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
-                  Download Resume
-                </Button>
+                <a
+                  href="https://drive.google.com/uc?export=download&id=1FF9WBjoNj642mgbskIyl-WIuXg02Iz9c"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                    <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
+                    Download Resume
+                  </Button>
+                </a>
                 <Button 
                   variant="outline" 
                   onClick={() => scrollToSection('contact')}
@@ -301,8 +307,12 @@ const Index = () => {
             <div className="flex justify-center lg:justify-end animate-on-scroll opacity-0 translate-x-8 transition-all duration-1000">
               <div className="relative group">
                 <div className="w-80 h-80 rounded-full bg-gradient-to-br from-blue-400 via-purple-500 to-teal-500 p-1 shadow-2xl group-hover:scale-105 transition-all duration-500">
-                  <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-6xl group-hover:scale-110 transition-all duration-500">
-                    👨‍💻
+                  <div className="w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center group-hover:scale-110 transition-all duration-500">
+                    <img 
+                      src="https://i.postimg.cc/4dnP5dxV/irfan-new.jpg" 
+                      alt="Shaik Irfan Shareef"
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </div>
                 </div>
                 <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
