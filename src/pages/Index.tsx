@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
-
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -14,13 +13,7 @@ const Index = () => {
   const [typedText, setTypedText] = useState('');
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
-
-  const roles = [
-    'AI & Data Science Enthusiast',
-    'Machine Learning Engineer',
-    'Data Engineering Specialist',
-    'Full-Stack Developer'
-  ];
+  const roles = ['AI & Data Science Enthusiast', 'Machine Learning Engineer', 'Data Engineering Specialist', 'Full-Stack Developer'];
 
   // Typing animation effect
   useEffect(() => {
@@ -37,7 +30,7 @@ const Index = () => {
       const timer = setTimeout(() => {
         setTypedText(currentRole.slice(0, typedText.length - 1));
         if (typedText.length === 0) {
-          setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+          setCurrentRoleIndex(prev => (prev + 1) % roles.length);
           setIsTyping(true);
         }
       }, 50);
@@ -49,16 +42,13 @@ const Index = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
-      
       const sections = ['home', 'about', 'experience', 'projects', 'skills', 'services', 'contact'];
       const scrollPosition = window.scrollY + 100;
-
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetHeight = element.offsetHeight;
-          
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
             break;
@@ -66,110 +56,112 @@ const Index = () => {
         }
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Intersection Observer for animations
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
       observer.observe(el);
     });
-
     return () => observer.disconnect();
   }, []);
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
     setIsMenuOpen(false);
   };
-
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
       title: "Message Sent! ✨",
-      description: "Thank you for your message. I'll get back to you soon.",
+      description: "Thank you for your message. I'll get back to you soon."
     });
   };
-
-  const navItems = [
-    { id: 'home', label: 'Home', icon: User },
-    { id: 'about', label: 'About', icon: User },
-    { id: 'experience', label: 'Experience', icon: Briefcase },
-    { id: 'projects', label: 'Projects', icon: Code },
-    { id: 'skills', label: 'Skills', icon: Wrench },
-    { id: 'services', label: 'Services', icon: Briefcase },
-    { id: 'contact', label: 'Contact', icon: MessageCircle },
-  ];
-
+  const navItems = [{
+    id: 'home',
+    label: 'Home',
+    icon: User
+  }, {
+    id: 'about',
+    label: 'About',
+    icon: User
+  }, {
+    id: 'experience',
+    label: 'Experience',
+    icon: Briefcase
+  }, {
+    id: 'projects',
+    label: 'Projects',
+    icon: Code
+  }, {
+    id: 'skills',
+    label: 'Skills',
+    icon: Wrench
+  }, {
+    id: 'services',
+    label: 'Services',
+    icon: Briefcase
+  }, {
+    id: 'contact',
+    label: 'Contact',
+    icon: MessageCircle
+  }];
   const skills = {
     languages: ['Python', 'SQL', 'JavaScript', 'HTML', 'CSS'],
     libraries: ['Pandas', 'NumPy', 'Scikit-learn', 'Matplotlib', 'Seaborn', 'NLTK'],
     platforms: ['Airflow', 'Snowflake', 'DBT', 'Firebase', 'AWS'],
     softSkills: ['Problem Solving', 'Teamwork', 'Communication']
   };
-
-  const projects = [
-    {
-      title: 'EduSwap Platform',
-      description: 'A student skill exchange web app built using React.js and Firebase with real-time features like authentication, posts, tags, and search.',
-      tech: ['React.js', 'Firebase', 'JavaScript', 'CSS'],
-      github: 'https://github.com/IrfanShaik007',
-      gradient: 'from-blue-400 to-purple-600'
-    },
-    {
-      title: 'Sales Data Pipeline',
-      description: 'Simulated a sales data warehouse using Apache Airflow, DBT, and Snowflake. Includes SQL-based metric analysis and BI tool dashboards.',
-      tech: ['Apache Airflow', 'DBT', 'Snowflake', 'SQL'],
-      github: 'https://github.com/IrfanShaik007',
-      gradient: 'from-green-400 to-blue-600'
-    }
-  ];
-
-  const services = [
-    {
-      title: 'Machine Learning Model Development',
-      description: 'Building and deploying ML models for classification, regression, and NLP tasks.',
-      icon: '🤖',
-      gradient: 'from-pink-400 to-red-600'
-    },
-    {
-      title: 'Data Pipeline Engineering',
-      description: 'Designing and implementing scalable data pipelines and ETL processes.',
-      icon: '⚡',
-      gradient: 'from-yellow-400 to-orange-600'
-    },
-    {
-      title: 'Full-Stack Web Development',
-      description: 'Creating responsive web applications with modern frameworks and databases.',
-      icon: '🌐',
-      gradient: 'from-green-400 to-teal-600'
-    },
-    {
-      title: 'Data Visualization & Analytics',
-      description: 'Building interactive dashboards and conducting comprehensive data analysis.',
-      icon: '📊',
-      gradient: 'from-purple-400 to-indigo-600'
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-x-hidden">
+  const projects = [{
+    title: 'EduSwap Platform',
+    description: 'A student skill exchange web app built using React.js and Firebase with real-time features like authentication, posts, tags, and search.',
+    tech: ['React.js', 'Firebase', 'JavaScript', 'CSS'],
+    github: 'https://github.com/IrfanShaik007',
+    gradient: 'from-blue-400 to-purple-600'
+  }, {
+    title: 'Sales Data Pipeline',
+    description: 'Simulated a sales data warehouse using Apache Airflow, DBT, and Snowflake. Includes SQL-based metric analysis and BI tool dashboards.',
+    tech: ['Apache Airflow', 'DBT', 'Snowflake', 'SQL'],
+    github: 'https://github.com/IrfanShaik007',
+    gradient: 'from-green-400 to-blue-600'
+  }];
+  const services = [{
+    title: 'Machine Learning Model Development',
+    description: 'Building and deploying ML models for classification, regression, and NLP tasks.',
+    icon: '🤖',
+    gradient: 'from-pink-400 to-red-600'
+  }, {
+    title: 'Data Pipeline Engineering',
+    description: 'Designing and implementing scalable data pipelines and ETL processes.',
+    icon: '⚡',
+    gradient: 'from-yellow-400 to-orange-600'
+  }, {
+    title: 'Full-Stack Web Development',
+    description: 'Creating responsive web applications with modern frameworks and databases.',
+    icon: '🌐',
+    gradient: 'from-green-400 to-teal-600'
+  }, {
+    title: 'Data Visualization & Analytics',
+    description: 'Building interactive dashboards and conducting comprehensive data analysis.',
+    icon: '📊',
+    gradient: 'from-purple-400 to-indigo-600'
+  }];
+  return <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-x-hidden">
       {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
@@ -189,29 +181,17 @@ const Index = () => {
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-8">
-              {navItems.map((item, index) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`text-sm font-medium transition-all duration-300 hover:text-blue-600 hover:scale-105 relative group ${
-                    activeSection === item.id ? 'text-blue-600' : 'text-gray-700'
-                  }`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
+              {navItems.map((item, index) => <button key={item.id} onClick={() => scrollToSection(item.id)} className={`text-sm font-medium transition-all duration-300 hover:text-blue-600 hover:scale-105 relative group ${activeSection === item.id ? 'text-blue-600' : 'text-gray-700'}`} style={{
+              animationDelay: `${index * 100}ms`
+            }}>
                   {item.label}
-                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${
-                    activeSection === item.id ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}></span>
-                </button>
-              ))}
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${activeSection === item.id ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+                </button>)}
             </div>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-blue-600 transition-all duration-300 hover:scale-110"
-              >
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-700 hover:text-blue-600 transition-all duration-300 hover:scale-110">
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
@@ -219,23 +199,14 @@ const Index = () => {
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden transition-all duration-500 ease-in-out ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        } overflow-hidden bg-white/90 backdrop-blur-xl border-t border-gray-200/50`}>
+        <div className={`md:hidden transition-all duration-500 ease-in-out ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden bg-white/90 backdrop-blur-xl border-t border-gray-200/50`}>
           <div className="px-2 pt-2 pb-3 space-y-1">
-            {navItems.map((item, index) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`block px-3 py-2 text-base font-medium transition-all duration-300 hover:text-blue-600 hover:bg-blue-50 rounded-lg w-full text-left ${
-                  activeSection === item.id ? 'text-blue-600 bg-blue-50' : 'text-gray-700'
-                }`}
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
+            {navItems.map((item, index) => <button key={item.id} onClick={() => scrollToSection(item.id)} className={`block px-3 py-2 text-base font-medium transition-all duration-300 hover:text-blue-600 hover:bg-blue-50 rounded-lg w-full text-left ${activeSection === item.id ? 'text-blue-600 bg-blue-50' : 'text-gray-700'}`} style={{
+            animationDelay: `${index * 50}ms`
+          }}>
                 <item.icon className="inline mr-2" size={18} />
                 {item.label}
-              </button>
-            ))}
+              </button>)}
           </div>
         </div>
       </nav>
@@ -266,41 +237,30 @@ const Index = () => {
               </p>
               
               <div className="flex flex-wrap gap-4">
-                <a
-                  href="https://drive.google.com/uc?export=download&id=1FF9WBjoNj642mgbskIyl-WIuXg02Iz9c"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="https://drive.google.com/uc?export=download&id=1FF9WBjoNj642mgbskIyl-WIuXg02Iz9c" target="_blank" rel="noopener noreferrer">
                   <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
                     <Download className="mr-2 h-4 w-4 group-hover:animate-bounce" />
                     Download Resume
                   </Button>
                 </a>
-                <Button 
-                  variant="outline" 
-                  onClick={() => scrollToSection('contact')}
-                  className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 group"
-                >
+                <Button variant="outline" onClick={() => scrollToSection('contact')} className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 group">
                   <MessageCircle className="mr-2 h-4 w-4 group-hover:animate-pulse" />
                   Get In Touch
                 </Button>
               </div>
               
               <div className="flex space-x-6">
-                {[
-                  { icon: Linkedin, href: "https://linkedin.com/in/irfan-shareef-shaik", color: "hover:text-blue-600" },
-                  { icon: Github, href: "https://github.com/IrfanShaik007", color: "hover:text-gray-900" }
-                ].map((social, index) => (
-                  <a 
-                    key={index}
-                    href={social.href} 
-                    className={`text-gray-600 ${social.color} transition-all duration-300 hover:scale-125 hover:-translate-y-1`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                {[{
+                icon: Linkedin,
+                href: "https://linkedin.com/in/irfan-shareef-shaik",
+                color: "hover:text-blue-600"
+              }, {
+                icon: Github,
+                href: "https://github.com/IrfanShaik007",
+                color: "hover:text-gray-900"
+              }].map((social, index) => <a key={index} href={social.href} className={`text-gray-600 ${social.color} transition-all duration-300 hover:scale-125 hover:-translate-y-1`} target="_blank" rel="noopener noreferrer">
                     <social.icon size={28} />
-                  </a>
-                ))}
+                  </a>)}
               </div>
             </div>
             
@@ -308,11 +268,7 @@ const Index = () => {
               <div className="relative group">
                 <div className="w-80 h-80 rounded-full bg-gradient-to-br from-blue-400 via-purple-500 to-teal-500 p-1 shadow-2xl group-hover:scale-105 transition-all duration-500">
                   <div className="w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center group-hover:scale-110 transition-all duration-500">
-                    <img 
-                      src="https://i.postimg.cc/4dnP5dxV/irfan-new.jpg" 
-                      alt="Shaik Irfan Shareef"
-                      className="w-full h-full object-cover rounded-full"
-                    />
+                    <img src="https://i.postimg.cc/4dnP5dxV/irfan-new.jpg" alt="Shaik Irfan Shareef" className="w-full h-full object-cover rounded-full" />
                   </div>
                 </div>
                 <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
@@ -375,17 +331,12 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {['Spark Tank Participant', 'GDSC Hackathon', 'SIH Participant', 'LeetCode Solver', 'GFG Contributor', 'HackerRank'].map((achievement, index) => (
-                  <Badge 
-                    key={index}
-                    variant="secondary" 
-                    className="mr-2 mb-2 hover:scale-105 transition-all duration-300 cursor-pointer bg-gradient-to-r from-purple-100 to-blue-100 hover:from-purple-200 hover:to-blue-200"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
+                {['Spark Tank Participant', 'GDSC Hackathon', 'SIH Participant', 'LeetCode Solver', 'GFG Contributor', 'HackerRank'].map((achievement, index) => <Badge key={index} variant="secondary" className="mr-2 mb-2 hover:scale-105 transition-all duration-300 cursor-pointer bg-gradient-to-r from-purple-100 to-blue-100 hover:from-purple-200 hover:to-blue-200" style={{
+                animationDelay: `${index * 100}ms`
+              }}>
                     <Star className="w-3 h-3 mr-1" />
                     {achievement}
-                  </Badge>
-                ))}
+                  </Badge>)}
               </CardContent>
             </Card>
           </div>
@@ -418,29 +369,17 @@ const Index = () => {
             </CardHeader>
             <CardContent className="relative">
               <ul className="space-y-3 text-gray-700">
-                {[
-                  'Built ML classification models for real-world applications',
-                  'Performed NLP, EDA, and sentiment analysis using Python and Scikit-learn',
-                  'Utilized Google Colab for collaborative development and model training',
-                  'Delivered comprehensive analysis reports and model documentation'
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 group/item">
+                {['Built ML classification models for real-world applications', 'Performed NLP, EDA, and sentiment analysis using Python and Scikit-learn', 'Utilized Google Colab for collaborative development and model training', 'Delivered comprehensive analysis reports and model documentation'].map((item, index) => <li key={index} className="flex items-start gap-3 group/item">
                     <span className="text-blue-600 group-hover/item:scale-125 transition-transform duration-300">•</span>
                     <span className="group-hover/item:text-gray-900 transition-colors duration-300">{item}</span>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
               <div className="flex flex-wrap gap-2 mt-6">
-                {['Python', 'Scikit-learn', 'NLP', 'Google Colab', 'Machine Learning'].map((tech, index) => (
-                  <Badge 
-                    key={index}
-                    variant="outline" 
-                    className="hover:scale-105 transition-all duration-300 hover:bg-blue-100 hover:border-blue-300"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
+                {['Python', 'Scikit-learn', 'NLP', 'Google Colab', 'Machine Learning'].map((tech, index) => <Badge key={index} variant="outline" className="hover:scale-105 transition-all duration-300 hover:bg-blue-100 hover:border-blue-300" style={{
+                animationDelay: `${index * 100}ms`
+              }}>
                     {tech}
-                  </Badge>
-                ))}
+                  </Badge>)}
               </div>
             </CardContent>
           </Card>
@@ -460,22 +399,14 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <Card 
-                key={index} 
-                className="hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 animate-on-scroll opacity-0 translate-y-8 border-0 bg-white relative overflow-hidden group"
-                style={{ animationDelay: `${index * 200}ms` }}
-              >
+            {projects.map((project, index) => <Card key={index} className="hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 animate-on-scroll opacity-0 translate-y-8 border-0 bg-white relative overflow-hidden group" style={{
+            animationDelay: `${index * 200}ms`
+          }}>
                 <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
                 <CardHeader className="relative">
                   <CardTitle className="flex items-center justify-between group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-500">
                     {project.title}
-                    <a 
-                      href={project.github}
-                      className="text-gray-600 hover:text-blue-600 transition-all duration-300 hover:scale-125 hover:rotate-12"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <a href={project.github} className="text-gray-600 hover:text-blue-600 transition-all duration-300 hover:scale-125 hover:rotate-12" target="_blank" rel="noopener noreferrer">
                       <ExternalLink size={20} />
                     </a>
                   </CardTitle>
@@ -483,20 +414,14 @@ const Index = () => {
                 <CardContent className="relative">
                   <p className="text-gray-600 mb-4 group-hover:text-gray-700 transition-colors duration-300">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => (
-                      <Badge 
-                        key={techIndex} 
-                        variant="secondary"
-                        className="hover:scale-105 transition-all duration-300 cursor-pointer"
-                        style={{ animationDelay: `${techIndex * 100}ms` }}
-                      >
+                    {project.tech.map((tech, techIndex) => <Badge key={techIndex} variant="secondary" className="hover:scale-105 transition-all duration-300 cursor-pointer" style={{
+                  animationDelay: `${techIndex * 100}ms`
+                }}>
                         {tech}
-                      </Badge>
-                    ))}
+                      </Badge>)}
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -513,12 +438,9 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {Object.entries(skills).map(([category, skillList], index) => (
-              <Card 
-                key={index} 
-                className="hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 animate-on-scroll opacity-0 translate-y-8 border-0 bg-white/80 backdrop-blur-sm group"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
+            {Object.entries(skills).map(([category, skillList], index) => <Card key={index} className="hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 animate-on-scroll opacity-0 translate-y-8 border-0 bg-white/80 backdrop-blur-sm group" style={{
+            animationDelay: `${index * 150}ms`
+          }}>
                 <CardHeader>
                   <CardTitle className="capitalize text-lg group-hover:text-teal-600 transition-colors duration-300">
                     {category.replace(/([A-Z])/g, ' $1').trim()}
@@ -526,20 +448,14 @@ const Index = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
-                    {skillList.map((skill, skillIndex) => (
-                      <Badge 
-                        key={skillIndex} 
-                        variant="outline" 
-                        className="hover:bg-teal-100 hover:border-teal-300 hover:scale-105 transition-all duration-300 cursor-pointer"
-                        style={{ animationDelay: `${skillIndex * 50}ms` }}
-                      >
+                    {skillList.map((skill, skillIndex) => <Badge key={skillIndex} variant="outline" className="hover:bg-teal-100 hover:border-teal-300 hover:scale-105 transition-all duration-300 cursor-pointer" style={{
+                  animationDelay: `${skillIndex * 50}ms`
+                }}>
                         {skill}
-                      </Badge>
-                    ))}
+                      </Badge>)}
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -557,12 +473,9 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
-              <Card 
-                key={index} 
-                className="text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 animate-on-scroll opacity-0 translate-y-8 border-0 bg-white relative overflow-hidden group cursor-pointer"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
+            {services.map((service, index) => <Card key={index} className="text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 animate-on-scroll opacity-0 translate-y-8 border-0 bg-white relative overflow-hidden group cursor-pointer" style={{
+            animationDelay: `${index * 150}ms`
+          }}>
                 <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
                 <CardHeader className="relative">
                   <div className="text-4xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">{service.icon}</div>
@@ -573,8 +486,7 @@ const Index = () => {
                 <CardContent className="relative">
                   <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">{service.description}</p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -595,28 +507,34 @@ const Index = () => {
             <div className="animate-on-scroll opacity-0 translate-x-8 transition-all duration-1000">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
               <div className="space-y-6">
-                {[
-                  { icon: Mail, href: "mailto:IrfanShareefs067@gmail.com", text: "IrfanShareefs067@gmail.com", color: "text-red-600" },
-                  { icon: Phone, href: "tel:+919676503365", text: "+91-9676503365", color: "text-green-600" },
-                  { icon: Linkedin, href: "https://linkedin.com/in/irfan-shareef-shaik", text: "linkedin.com/in/irfan-shareef-shaik", color: "text-blue-600" },
-                  { icon: Github, href: "https://github.com/IrfanShaik007", text: "github.com/IrfanShaik007", color: "text-gray-800" }
-                ].map((contact, index) => (
-                  <div 
-                    key={index}
-                    className="flex items-center gap-4 p-4 rounded-lg bg-white/80 backdrop-blur-sm hover:bg-white hover:shadow-lg transition-all duration-300 hover:scale-105 group"
-                    style={{ animationDelay: `${index * 150}ms` }}
-                  >
+                {[{
+                icon: Mail,
+                href: "mailto:IrfanShareefs067@gmail.com",
+                text: "IrfanShareefs067@gmail.com",
+                color: "text-red-600"
+              }, {
+                icon: Phone,
+                href: "tel:+919676503365",
+                text: "+91-9676503365",
+                color: "text-green-600"
+              }, {
+                icon: Linkedin,
+                href: "https://linkedin.com/in/irfan-shareef-shaik",
+                text: "linkedin.com/in/irfan-shareef-shaik",
+                color: "text-blue-600"
+              }, {
+                icon: Github,
+                href: "https://github.com/IrfanShaik007",
+                text: "github.com/IrfanShaik007",
+                color: "text-gray-800"
+              }].map((contact, index) => <div key={index} className="flex items-center gap-4 p-4 rounded-lg bg-white/80 backdrop-blur-sm hover:bg-white hover:shadow-lg transition-all duration-300 hover:scale-105 group" style={{
+                animationDelay: `${index * 150}ms`
+              }}>
                     <contact.icon className={`${contact.color} group-hover:scale-125 transition-transform duration-300`} size={24} />
-                    <a 
-                      href={contact.href} 
-                      className="text-gray-700 hover:text-blue-600 transition-colors duration-300 flex-1"
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
+                    <a href={contact.href} className="text-gray-700 hover:text-blue-600 transition-colors duration-300 flex-1" target="_blank" rel="noopener noreferrer">
                       {contact.text}
                     </a>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </div>
             
@@ -627,32 +545,15 @@ const Index = () => {
               <CardContent>
                 <form onSubmit={handleContactSubmit} className="space-y-6">
                   <div className="group">
-                    <Input 
-                      placeholder="Your Name" 
-                      required 
-                      className="border-2 border-gray-200 focus:border-blue-500 transition-all duration-300 group-hover:border-gray-300"
-                    />
+                    <Input placeholder="Your Name" required className="border-2 border-gray-200 focus:border-blue-500 transition-all duration-300 group-hover:border-gray-300" />
                   </div>
                   <div className="group">
-                    <Input 
-                      type="email" 
-                      placeholder="Your Email" 
-                      required 
-                      className="border-2 border-gray-200 focus:border-blue-500 transition-all duration-300 group-hover:border-gray-300"
-                    />
+                    <Input type="email" placeholder="Your Email" required className="border-2 border-gray-200 focus:border-blue-500 transition-all duration-300 group-hover:border-gray-300" />
                   </div>
                   <div className="group">
-                    <Textarea 
-                      placeholder="Your Message" 
-                      rows={4} 
-                      required 
-                      className="border-2 border-gray-200 focus:border-blue-500 transition-all duration-300 group-hover:border-gray-300"
-                    />
+                    <Textarea placeholder="Your Message" rows={4} required className="border-2 border-gray-200 focus:border-blue-500 transition-all duration-300 group-hover:border-gray-300" />
                   </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
-                  >
+                  <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
                     <span className="group-hover:scale-110 transition-transform duration-300">Send Message</span>
                   </Button>
                 </form>
@@ -667,7 +568,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
           <p className="text-lg">&copy; 2024 Shaik Irfan Shareef. All rights reserved.</p>
-          <p className="text-gray-300 mt-2">Built with ❤️ and cutting-edge technology</p>
+          <p className="text-gray-300 mt-2"></p>
         </div>
       </footer>
 
@@ -679,8 +580,6 @@ const Index = () => {
           }
         `}
       </style>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
