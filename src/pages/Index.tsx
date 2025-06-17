@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Mail, Phone, Github, Linkedin, Download, ExternalLink, Menu, X, User, Briefcase, Code, Wrench, MessageCircle, ChevronDown, Star, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -662,12 +661,14 @@ const Index = () => {
         </div>
       </footer>
 
-      <style jsx>{`
-        .animate-on-scroll.animate-in {
-          opacity: 1 !important;
-          transform: translateY(0) translateX(0) !important;
-        }
-      `}</style>
+      <style>
+        {`
+          .animate-on-scroll.animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) translateX(0) !important;
+          }
+        `}
+      </style>
     </div>
   );
 };
